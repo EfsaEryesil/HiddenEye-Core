@@ -34,7 +34,7 @@ HiddenEye Core is currently in its developer phase and can be installed as an un
 
 ---
 
-## 💻 Usage & Testing
+##  Usage & Testing
 
 1. Navigate to a target website (For testing, you can safely use: `http://testphp.vulnweb.com`).
 2. Click the HiddenEye extension icon in your browser's top right corner.
