@@ -25,3 +25,18 @@ HiddenEye Core is currently in its developer phase and can be installed as an un
 
    ```bash
    git clone [https://github.com/EfsaEryesil/HiddenEye-Core.git](https://github.com/EfsaEryesil/HiddenEye-Core.git)
+   ```
+
+2. Open Google Chrome and navigate to `chrome://extensions/`.
+3. Enable **"Developer mode"** in the top right corner.
+4. Click on **"Load unpacked"** and select the `HiddenEye-Core` folder you just downloaded.
+5. Pin the HiddenEye icon to your extension bar and start hunting!
+
+---
+
+## 💻 Usage & Testing
+
+1. Navigate to a target website (For testing, you can safely use: `http://testphp.vulnweb.com`).
+2. Click the HiddenEye extension icon in your browser's top right corner.
+3. The UI will instantly pop up and display the security score, detected WAFs, missing headers, and potential CVEs.
+4. Click the **"Export JSON"** button to save the detailed reconnaissance report.
