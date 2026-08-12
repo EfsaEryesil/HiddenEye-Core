@@ -1,4 +1,4 @@
-# HIDDENEYE CORE v1.4
+# HIDDENEYE CORE 
 
 **Advanced Passive Recon, OSINT & Threat Detection Engine for Chrome**
 
