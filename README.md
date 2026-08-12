@@ -24,7 +24,7 @@ HiddenEye Core is currently in its developer phase and can be installed as an un
 1. Clone this repository or download the ZIP file:
 
    ```bash
-   git clone [https://github.com/EfsaEryesil/HiddenEye-Core.git](https://github.com/EfsaEryesil/HiddenEye-Core.git)
+   git clone https://github.com/EfsaEryesil/HiddenEye-Core.git
    ```
 
 2. Open Google Chrome and navigate to `chrome://extensions/`.
