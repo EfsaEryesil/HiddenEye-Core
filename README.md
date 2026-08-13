@@ -14,6 +14,8 @@ HiddenEye Core is a lightweight, highly efficient Chrome Extension designed for 
 *   **Real-Time CVE Mapping:** Cross-references detected technology versions (via DOM and scripts) with the CIRCL API to immediately flag outdated software and known CVE risks.
 *   **Security Header Scoring (A+ to F):** Evaluates the target's fundamental defense mechanisms based on the strict presence of `Content-Security-Policy (CSP)` and `Strict-Transport-Security (HSTS)`.
 *   **One-Click JSON Export:** Generates clean, parsed JSON reports of all detected fingerprints and vulnerabilities, perfectly formatted for SOC ticketing systems or Pentest reporting.
+*   **Dynamic SPA Observation (MutationObserver):** Silently monitors DOM changes in real-time to uncover dynamically loaded technologies and hidden endpoints in modern Single Page Applications (React, Vue, etc.) without triggering page reloads.
+*   **DevSecOps & CI/CD Pipeline:** Fully automated build process powered by GitHub Actions. The extension self-packages into a deployable .zip artifact upon every new commit, ensuring continuous delivery and stability
 
 ---
 
