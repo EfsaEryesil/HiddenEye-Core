@@ -42,3 +42,6 @@ HiddenEye Core is currently in its developer phase and can be installed as an un
 2. Click the HiddenEye extension icon in your browser's top right corner.
 3. The UI will instantly pop up and display the security score, detected WAFs, missing headers, and potential CVEs.
 4. Click the **"Export JSON"** button to save the detailed reconnaissance report.
+
+## Disclaimer
+This tool is developed for educational purposes, security research, and authorized testing only. The author assumes no liability for illegal or malicious use.
