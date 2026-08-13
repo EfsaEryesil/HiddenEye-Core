@@ -1,6 +1,3 @@
-// =======================================================
-// HIDDENEYE CORE v1.4 - BACKEND LEAK & THREAT ENGINE
-// =======================================================
 
 const NPM_PACKAGE_MAP = {
   'jQuery': 'jquery',
@@ -14,20 +11,16 @@ const NPM_PACKAGE_MAP = {
 
 let globalScanResults = []; 
 
+
 async function fetchLatestNpmVersion(packageName) {
   const npmName = NPM_PACKAGE_MAP[packageName];
   if (!npmName) return null;
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
-    const res = await fetch(`https://registry.npmjs.org/${npmName}/latest`, { signal: controller.signal });
-    clearTimeout(timeoutId);
-    const data = await res.json();
-    return data.version || null;
-  } catch (e) {
-    return null;
-  }
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ action: "fetchNPM", package: npmName }, (response) => {
+      resolve(response ? response.version : null);
+    });
+  });
 }
 
 function isOutdated(currentVer, latestVer) {
@@ -54,13 +47,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
+    
     const results = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: scanPageTechnologies
     });
 
-    hideLoading();
     let detectedTechs = (results && results[0] && results[0].result) ? results[0].result : [];
+
+    
+    try {
+      const dynamicResults = await new Promise((resolve) => {
+        chrome.tabs.sendMessage(tab.id, { action: "getDynamicTechs" }, (response) => {
+          resolve(response ? response.techs : []);
+        });
+      });
+      
+      if (dynamicResults && dynamicResults.length > 0) {
+        dynamicResults.forEach(dt => techsPushUnique(detectedTechs, dt));
+      }
+    } catch (msgErr) {
+      
+    }
+
+    hideLoading();
 
     try {
       const headRes = await fetch(tab.url, { method: 'HEAD' });
@@ -176,12 +186,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (tech.version !== "Unknown" && tech.vendor && tech.product) {
         try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 3000);
-          const res = await fetch(`https://cve.circl.lu/api/search/${tech.vendor}/${tech.product}`, { signal: controller.signal });
-          clearTimeout(timeoutId);
+          
+          const data = await new Promise((resolve) => {
+            chrome.runtime.sendMessage({ action: "fetchCVE", vendor: tech.vendor, product: tech.product }, (response) => {
+              resolve(response);
+            });
+          });
 
-          const data = await res.json();
           const shortVer = tech.version.split('.').slice(0, 2).join('.');
 
           const matchedCves = data.results ? data.results.filter(item => {
@@ -281,6 +292,7 @@ function showEmptyState() {
   document.getElementById('results').innerHTML = `<div class="empty-box">NO MATCHING FINGERPRINTS FOUND</div>`;
 }
 
+
 function scanPageTechnologies() {
   const techs = [];
   const html = document.documentElement.outerHTML;
@@ -340,7 +352,6 @@ function scanPageTechnologies() {
 
   return techs;
 }
-
 
 (function() {
   const _0x1a2b = atob("TWFkZSBieSBLcmFzbGlzS3JhbmFnaW4="); 

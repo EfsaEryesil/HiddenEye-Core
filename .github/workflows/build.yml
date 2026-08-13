@@ -1,0 +1,26 @@
+name: Build Extension
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Zip Extension Files
+        run: |
+          zip -r HiddenEye-Core-v1.5.zip manifest.json popup.html popup.js background.js content.js icons/ README.md
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: HiddenEye-Core-Release
+          path: HiddenEye-Core-v1.5.zip
